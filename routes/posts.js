@@ -29,4 +29,24 @@ router.delete("/:id", (req, res) => {
     });
 });
 
+
+router.get("/:id", (req, res) => {
+    const { id } = req.params;
+    const sql = "SELECT * FROM posts WHERE id = ?";
+
+    connection.query(sql, [id], (err, results) => {
+        if (err) {
+            console.error("Errore query SHOW:", err);
+            return res.status(500).json({ error: "Errore del server" });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: "Post non trovato" });
+        }
+
+        res.json(results[0]);
+    });
+});
+
+
 module.exports = router;
