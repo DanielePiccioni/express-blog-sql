@@ -5,6 +5,10 @@ const PORT = 3000
 const connection = require(`./database/connection`)
 
 app.use(express.static(`public`))
+app.use(express.json());
+
+const postsRouter = require("./routes/posts");
+app.use("/posts", postsRouter);
 
 app.listen(PORT, () => {
     console.log(`server running on http://localhost:${PORT}`);
